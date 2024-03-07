@@ -1,0 +1,369 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "ProyectoBimestral",
+    "dateExported": "2024-02-23T17:33:23.733Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "ff582a16-ac8a-42f1-8f58-4cb22b703560",
+            "name": "User",
+            "containerId": "",
+            "created": "2024-02-22T21:09:12.700Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "c4f05da0-ca5a-4674-9280-a3cc28136cb1",
+            "name": "Category",
+            "containerId": "",
+            "created": "2024-02-22T21:20:52.161Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "be8fcd2c-3d2f-4531-96e8-0db630dfa895",
+            "name": "Product",
+            "containerId": "",
+            "created": "2024-02-22T21:55:29.541Z",
+            "sortNum": 30000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "ad3bb5d1-f32e-4cc7-a7ef-b8bd612a0349",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "ff582a16-ac8a-42f1-8f58-4cb22b703560",
+            "name": "test",
+            "url": "test",
+            "method": "GET",
+            "sortNum": 5000,
+            "created": "2024-02-22T21:14:39.795Z",
+            "modified": "2024-02-23T16:31:34.849Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWQ4Yzg0Y2VmYmU5MjAyZDM4NmU2NDMiLCJ1c2VybmFtZSI6ImNhcm1hcyIsIm5hbWUiOiJDYXJsb3MiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MDg3MDU4ODQsImV4cCI6MTcwODcxNjY4NH0.EzjkgjEijSMuHU3aWoKK6cacwx5JR8gRA5U26uxjmlg"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c7fc4960-7c11-40dd-b6c7-a54741eea5e8",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "ff582a16-ac8a-42f1-8f58-4cb22b703560",
+            "name": "register",
+            "url": "register",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-02-22T21:13:07.714Z",
+            "modified": "2024-02-23T16:22:45.928Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Carlos"
+                    },
+                    {
+                        "name": "surname",
+                        "value": "Armas"
+                    },
+                    {
+                        "name": "username",
+                        "value": "carmas"
+                    },
+                    {
+                        "name": "password",
+                        "value": "12345678"
+                    },
+                    {
+                        "name": "email",
+                        "value": "armassamuel018@gmail.com"
+                    },
+                    {
+                        "name": "phone",
+                        "value": "12345678"
+                    },
+                    {
+                        "name": "role",
+                        "value": "ADMIN"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "32b92bff-cf57-4082-8ee2-c7a8301e6d92",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "ff582a16-ac8a-42f1-8f58-4cb22b703560",
+            "name": "login",
+            "url": "login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-02-22T21:17:02.883Z",
+            "modified": "2024-02-23T16:31:24.145Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "username",
+                        "value": "carmas"
+                    },
+                    {
+                        "name": "password",
+                        "value": "12345678"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "ffb37fd1-1f3b-4989-be4a-9fe0144024a9",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "c4f05da0-ca5a-4674-9280-a3cc28136cb1",
+            "name": "create",
+            "url": "create",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2024-02-23T16:45:20.244Z",
+            "modified": "2024-02-23T16:48:23.667Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Videojuegos"
+                    },
+                    {
+                        "name": "description",
+                        "value": "Ventas de juego "
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "8f046a37-fe14-46fe-bd67-22b959d9bcc7",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "c4f05da0-ca5a-4674-9280-a3cc28136cb1",
+            "name": "AllCategories",
+            "url": "getAllCategories",
+            "method": "GET",
+            "sortNum": 40000,
+            "created": "2024-02-22T21:41:14.400Z",
+            "modified": "2024-02-23T14:43:27.297Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "b6bf4b14-bbe6-4417-9981-986e895fd772",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "c4f05da0-ca5a-4674-9280-a3cc28136cb1",
+            "name": "updateCategory",
+            "url": "updateCategory/65d8ccb827f1576f7440b157",
+            "method": "PUT",
+            "sortNum": 50000,
+            "created": "2024-02-22T21:53:02.480Z",
+            "modified": "2024-02-23T16:51:05.497Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Celulares"
+                    },
+                    {
+                        "name": "description",
+                        "value": "Ventas de todo tipos de marca"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "01684c90-038c-47eb-be9e-6206f85aa3f8",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "c4f05da0-ca5a-4674-9280-a3cc28136cb1",
+            "name": "deleteCategory",
+            "url": "deleteCategory/65d8ccb827f1576f7440b157",
+            "method": "DELETE",
+            "sortNum": 60000,
+            "created": "2024-02-22T21:55:00.996Z",
+            "modified": "2024-02-23T16:51:17.872Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c511b21d-3d1c-44a6-876f-2302b24fe654",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "be8fcd2c-3d2f-4531-96e8-0db630dfa895",
+            "name": "createProduct",
+            "url": "createProduct",
+            "method": "POST",
+            "sortNum": 70000,
+            "created": "2024-02-22T22:21:10.461Z",
+            "modified": "2024-02-23T17:26:40.808Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "name",
+                        "value": "Fc 24"
+                    },
+                    {
+                        "name": "description",
+                        "value": "Juego para Ps4"
+                    },
+                    {
+                        "name": "price",
+                        "value": "580"
+                    },
+                    {
+                        "name": "categoryId",
+                        "value": "65d8cd0a27f1576f7440b15e"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "5c61db3a-1370-4d5e-83f1-9adf9bcffa43",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "ff582a16-ac8a-42f1-8f58-4cb22b703560",
+            "name": "update",
+            "url": "update/65d8c61456f0ab60efb50486",
+            "method": "PUT",
+            "sortNum": 75000,
+            "created": "2024-02-23T14:36:04.578Z",
+            "modified": "2024-02-23T16:35:08.252Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWQ4YzkxYjljM2JjNjU4MmFiNmYyYWYiLCJ1c2VybmFtZSI6ImNhcm1hcyIsIm5hbWUiOiJDYXJsb3MiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MDg3MDYxMDEsImV4cCI6MTcwODcxNjkwMX0.aKqO3TYPZPfpK4ODsLWCsI61wrdLA-v_ya5BfUUJi7A"
+                }
+            ],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "88668d17-c2c3-4c93-bf45-7e07695a3b8f",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "be8fcd2c-3d2f-4531-96e8-0db630dfa895",
+            "name": "getAllProducts",
+            "url": "getAllProducts",
+            "method": "GET",
+            "sortNum": 80000,
+            "created": "2024-02-22T22:29:32.302Z",
+            "modified": "2024-02-23T14:38:34.938Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "9ccfaea9-69c8-494f-96d3-40bfa4d0e8d6",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "be8fcd2c-3d2f-4531-96e8-0db630dfa895",
+            "name": "getProductById",
+            "url": "getProductById/65d8d55099f0b35d823a79b8",
+            "method": "GET",
+            "sortNum": 90000,
+            "created": "2024-02-22T22:39:30.393Z",
+            "modified": "2024-02-23T17:27:13.010Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "c435556f-6caf-4e3f-9505-c048bf233e29",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "be8fcd2c-3d2f-4531-96e8-0db630dfa895",
+            "name": "updateProduct",
+            "url": "updateProduct/65d8d55099f0b35d823a79b8",
+            "method": "PUT",
+            "sortNum": 100000,
+            "created": "2024-02-23T01:45:25.498Z",
+            "modified": "2024-02-23T17:27:56.660Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formencoded",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "quantity",
+                        "value": "5"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "64771e0c-af9c-45c3-ac1c-656fff29c5cf",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "be8fcd2c-3d2f-4531-96e8-0db630dfa895",
+            "name": "inventory",
+            "url": "inventory",
+            "method": "GET",
+            "sortNum": 110000,
+            "created": "2024-02-23T02:01:08.524Z",
+            "modified": "2024-02-23T14:40:34.075Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "850422f0-7956-4c8b-987d-ee5b7987a4c0",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "be8fcd2c-3d2f-4531-96e8-0db630dfa895",
+            "name": "OutOfStockProducts",
+            "url": "getOutOfStockProducts",
+            "method": "GET",
+            "sortNum": 120000,
+            "created": "2024-02-23T02:56:16.099Z",
+            "modified": "2024-02-23T14:40:42.841Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "73336aaf-b5f9-4c4a-8d0f-7549c4b52b25",
+            "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
+            "containerId": "ff582a16-ac8a-42f1-8f58-4cb22b703560",
+            "name": "deleted",
+            "url": "deleteU/65d8c64a56f0ab60efb5048e",
+            "method": "DELETE",
+            "sortNum": 170000,
+            "created": "2024-02-23T16:27:02.515Z",
+            "modified": "2024-02-23T16:27:47.265Z",
+            "headers": [
+                {
+                    "name": "token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWQ4YzY0YTU2ZjBhYjYwZWZiNTA0OGUiLCJ1c2VybmFtZSI6InBhdHJvbiIsIm5hbWUiOiJDYXJsb3MiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MDg3MDU2NDksImV4cCI6MTcwODcxNjQ0OX0.FCgVBxyZFzqem-Yg9acec9W6KPF9hmf5FRQtb38hLXA"
+                }
+            ],
+            "params": [],
+            "tests": []
+        }
+    ],
+    "settings": {
+        "options": {
+            "baseUrl": "localhost:2656/"
+        }
+    }
+}
