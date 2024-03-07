@@ -12,8 +12,8 @@ api.post('/login', login)
 
 // RUTAS ADMIN PRIVADAS
 api.get('/testAdmin', [validateJwt, isAdmin], test)
-api.put('/update/:id', [validateJwt], update)
-api.delete('/deleteU/:id', [validateJwt], deleteU)
+api.put('/update/:id', [validateJwt, isAdmin], update)
+api.delete('/deleteU/:id', [validateJwt, isAdmin], deleteU)
 
 // RUTAS CLIENT PRIVADAS
 api.get('/testClient', [validateJwt, isClient], testClient)

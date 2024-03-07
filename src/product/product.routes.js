@@ -15,10 +15,10 @@ api.get('/getOutOfStockProducts', getOutOfStockProducts)
 api.delete('/deleteProduct/:id', deleteProduct)
 
 
-
+// Rutas de Productos Privadas para Cliente
 api.get('/getBestSellers',[validateJwt, isClient], getBestSellers)
 api.get('/searchProductsName/:name',[validateJwt, isClient],searchProductsByName)
-api.get('/Categories', [validateJwt], getAllCategorie)
+api.get('/Categories', [validateJwt,isClient ], getAllCategorie)
 api.get('/getProductsByCategory/:name', [validateJwt, isClient], getProductsByCategory);
 
 

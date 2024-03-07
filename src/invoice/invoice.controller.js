@@ -13,64 +13,64 @@ export const getInvoicesByUser = async (req, res) => {
         // Verificar si el usuario existe
         const userExists = await User.exists({ _id: userId });
         if (!userExists) {
-            return res.status(404).json({ message: 'Usuario no encontrado.' });
+            return res.status(404).json({ message: 'User not found.' });
         }
 
         // Obtener las facturas del usuario y su información relacionada
         const invoices = await Invoice.find({ userId }).populate('items.productId').populate('userId');
 
         if (invoices.length === 0) {
-            return res.status(404).json({ message: 'Este cliente no tiene facturas.' });
+            return res.status(404).json({ message: 'This customer does not have invoices.' });
         }
 
-        // Crear un nuevo documento PDF
+        // Creamos un nuevo documento pdf
         const doc = new PDFDocument();
 
-        // Escribir el contenido de las facturas en el PDF
+        // Aqui escribe en el pdf
         invoices.forEach((invoice, index) => {
-            // Encabezado de la factura
+            // Todo el encabezado de la factura
             doc.text(`Factura #${invoice._id}`);
             doc.text(`Fecha de Creación: ${invoice.createdAt}`);
-            // Verificar si invoice.userId es null antes de intentar acceder a sus propiedades
+            // Verificar si invoice.userId existe 
             if (invoice.userId) {
                 doc.text(`Cliente: ${invoice.userId.name} ${invoice.userId.surname}`);
             } else {
                 doc.text('Cliente: Nombre del cliente no disponible');
             }
-            doc.moveDown(); // Moverse hacia abajo para dejar espacio
+            doc.moveDown(); 
 
-            // Detalles de los productos (tabla)
+            // Detalles de los product lo metimos dentro de una tabla
             doc.moveDown();
             doc.text('Detalles de los productos:');
             doc.moveDown();
 
-            // Escribir detalles de cada producto en una lista
+            // Jala los detalles de los productos
             invoice.items.forEach((item) => {
                 doc.text(`${item.productId.name}: ${item.quantity} x Q ${item.price.toFixed(2)} = Q ${(item.quantity * item.price).toFixed(2)}`);
             });
 
             // Total de la factura
             doc.text(`Total Factura: Q ${invoice.totalAmount.toFixed(2)}`);
-            doc.moveDown(); // Moverse hacia abajo para dejar espacio
+            doc.moveDown(); 
             doc.text('Gracias por su compra. ¡Regrese pronto!', { align: 'center' });
 
-            // Agregar espacio entre facturas, excepto en la última
+            // Agregar espacio menos la ultima 
             if (index < invoices.length - 1) {
-                doc.addPage(); // Añadir una nueva página para la siguiente factura
+                doc.addPage() // si es muy grande la factura otra pagina.
             }
         });
 
         // Finalizar el documento PDF
         doc.end();
 
-        // Enviar el archivo PDF como respuesta
+        // Aqui enviamos el archivo PDF como respuesta
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'inline; filename=facturas_usuario.pdf');
         doc.pipe(res);
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error al obtener las facturas del usuario.' });
+        res.status(500).json({ message: 'Error obtaining user invoices.' });
     }
 };
 
@@ -83,14 +83,14 @@ export const getInvoices = async (req, res) => {
         // Verificar si el usuario existe
         const userExists = await User.exists({ _id: userId });
         if (!userExists) {
-            return res.status(404).json({ message: 'Usuario no encontrado.' });
+            return res.status(404).json({ message: 'User not found.' });
         }
 
-        // Obtener las facturas del usuario y su información relacionada
+        // Obteniene las facturas y sus datos
         const invoices = await Invoice.find({ userId }).populate('items.productId').populate('userId');
 
         if (invoices.length === 0) {
-            return res.status(404).json({ message: 'Este cliente no tiene facturas.' });
+            return res.status(404).json({ message: 'This customer has no invoices.' });
         }
 
         // Crear un nuevo documento PDF
@@ -115,12 +115,12 @@ export const getInvoices = async (req, res) => {
 
             // Total de la factura
             doc.text(`Total Factura: Q ${invoice.totalAmount.toFixed(2)}`);
-            doc.moveDown(); // Moverse hacia abajo para dejar espacio
+            doc.moveDown(); 
             doc.text('Gracias por su compra. ¡Regrese pronto!', { align: 'center' });
 
-            // Agregar espacio entre facturas, excepto en la última
+        
             if (index < invoices.length - 1) {
-                doc.addPage(); // Añadir una nueva página para la siguiente factura
+                doc.addPage(); 
             }
         });
 
@@ -134,7 +134,7 @@ export const getInvoices = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Error al obtener las facturas del usuario.' });
+        res.status(500).json({ message: 'Error obtaining user invoices.' });
     }
 };
 
@@ -149,29 +149,29 @@ export const updateInvoice = async (req, res) => {
             return res.status(400).json({ message: 'Items must be provided in the request body as an array' });
         }
 
-        // Obtener la factura a actualizar
+        // Obtiene la factura a actualizar
         const invoice = await Invoice.findById(invoiceId);
         if (!invoice) {
             return res.status(404).json({ message: 'Invoice not found' });
         }
 
-        // Verificar si la factura ya ha sido completada
+        // Verifica si ya fue terminada
         if (invoice.completed) {
             return res.status(400).json({ message: 'The invoice has already been completed and cannot be updated' });
         }
 
-        // Actualizar los elementos de la factura
+        // Actualiza
         invoice.items = items;
 
-        // Recalcular el totalAmount basado en los elementos actualizados
+        // Recalcula si le subo una compra
         invoice.totalAmount = items.reduce((total, item) => {
             return total + (item.price * item.quantity);
         }, 0);
 
-        // Guardar la factura actualizada en la base de datos
+        // Guarda
         await invoice.save();
 
-        // Devolver la factura actualizada al usuario
+        // Mensaje sastifactorio
         res.status(200).json({ message: 'Invoice updated successfully', invoice });
     } catch (error) {
         console.error('Error updating invoice:', error);

@@ -21,13 +21,13 @@
                 return res.status(400).json({ message: 'Invalid quantity.' });
             }
 
-            // Calcular el totalAmount basado en el precio del producto y la cantidad
+            // Calcular el totalAmount
             const totalAmount = product.price * parsedQuantity;
 
-            // Verificar si el carrito del usuario ya existe
+            // Verifica si el carrito ya exista
             let cart = await ShoppingCart.findOne({ userId });
 
-            // Si el carrito no existe, crear uno nuevo
+            // Si el carrito no existe crea uno nuevo
             if (!cart) {
                 cart = new ShoppingCart({
                     userId,
@@ -35,14 +35,14 @@
                     totalAmount
                 });
             } else {
-                // Si el carrito ya existe, agregar el producto al arreglo de items
+                // Aqui si ya existe el carrito los productos los va aguardando
                 cart.items.push({ productId: product._id, quantity: parsedQuantity, price: product.price });
 
-                // Recalcular el totalAmount sumando el precio del nuevo producto
+                // Recalcular el totalAmount
                 cart.totalAmount += totalAmount;
             }
 
-            // Guardar el carrito actualizado en la base de datos
+            // Guardar el carrito
             await cart.save();
 
             res.status(200).json({ message: 'Product added to cart successfully.' });
@@ -55,18 +55,18 @@
             try {
                 const { cartId, userId, productId } = req.params;
         
-                // Buscar el carrito del usuario por su ID
+                // Buscar el carrito
                 let cart = await ShoppingCart.findById(cartId);
         
-                // Verificar si el carrito pertenece al usuario
+                // Verifica si el id es del usuario
                 if (cart.userId.toString() !== userId) {
                     return res.status(403).json({ message: 'Unauthorized access to the shopping cart.' });
                 }
         
-                // Filtrar el arreglo de items para eliminar el producto con el productId especificado
+                // Filtra y lo elimana del arraylist
                 cart.items = cart.items.filter(item => item.productId.toString() !== productId);
         
-                // Guardar el carrito actualizado en la base de datos
+                // Guarda el carrito ya con los cambios
                 await cart.save();
         
                 res.status(200).json({ message: 'Selected product removed from cart successfully.' });
@@ -79,21 +79,21 @@
     try {
         const { userId } = req.params;
 
-        // Obtener el carrito de compras del usuario, populando los productos
+        // Obteniene el carrito y hace un populate
         const cart = await ShoppingCart.findOne({ userId }).populate('items.productId');
 
-        // Verificar si el carrito está vacío
+        // Verifica si el carrito esta vacio
         if (!cart || cart.items.length === 0) {
             return res.status(400).json({ message: 'The shopping cart is empty.' });
         }
 
-        // Calcular el total de la compra
+        // Hace el calculo de la venta total
         let totalAmount = 0;
         for (const item of cart.items) {
-            totalAmount += item.quantity * item.productId.price; // Usar item.productId.price en lugar de item.price
+            totalAmount += item.quantity * item.productId.price; 
         }
 
-        // Verificar si hay suficiente stock disponible para los productos en el carrito
+        // Verificar si hay suficiente productos
         for (const item of cart.items) {
             const product = await Product.findById(item.productId);
             if (!product || product.quantity < item.quantity) {
@@ -101,31 +101,31 @@
             }
         }
 
-        // Actualizar las cantidades de productos en stock y crear la factura
+        // Actualiza los productos 
         const promises = [];
         for (const item of cart.items) {
             const product = await Product.findById(item.productId);
-            product.quantity -= item.quantity; // Restar la cantidad comprada del stock
-            product.sales += item.quantity; // Actualizar las ventas del producto
-            promises.push(product.save()); // Guardar el producto actualizado
+            product.quantity -= item.quantity; // Resta
+            product.sales += item.quantity; // Actualiza
+            promises.push(product.save()); // Guardar
         }
-        await Promise.all(promises); // Esperar a que todas las actualizaciones se completen
+        await Promise.all(promises);
 
-        // Crear la factura, utilizando los documentos populados de los productos
+        // Crear la factura
         const invoice = new Invoice({
             userId,
             items: cart.items,
             totalAmount
         });
 
-        // Guardar la factura en la base de datos
+        // Guardar la factura
         await invoice.save();
 
-        // Vaciar el carrito de compras del usuario
+        // Vacia el carrito
         cart.items = [];
         await cart.save();
 
-        // Devolver la factura al usuario
+        // Devuelve la facfura al cliente
         res.status(200).json({ message: 'Purchase completed successfully.', invoice });
     } catch (error) {
         res.status(500).json({ message: error.message });

@@ -10,14 +10,14 @@ export const testC = (req, res) => {
 export const createCategory = async (req, res) => {
     const { name, description } = req.body;
     try {
-        //Aqui verificamos que no exista el nombre de categoria que estamos ingresando
+        //Verificamos que no exista la categoria
         const existingCategory = await Category.findOne({ name });
 
         if (existingCategory) {
             return res.status(400).json({ message: 'Category with this name already exists' });
         }
 
-        //Si no existe, crea una nueva categoria y la guarda en la base de datos
+        //Si no existe la categoria, crea la otra
         const newCategory = await Category.create({ name, description });
         return res.status(201).json({ message: 'Category created successfully', category: newCategory });
     } catch (error) {
@@ -60,21 +60,21 @@ export const deleteCategory = async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Buscar la categoría que se va a eliminar
+        // Buscamos la categoria que vamos a eliminar
         const categoryToDelete = await Category.findById(id);
 
-        // Verificar si la categoría existe antes de intentar eliminarla
+        // Verificamos si existe la categoria
         if (!categoryToDelete) {
             return res.status(404).send({ message: 'Category not found' });
         }
 
-        // Encuentra la categoría predeterminada
+        // Aqui esta la categoria default
         const defaultCategory = await Category.findOne({ name: 'Default' });
 
-        // Encuentra todos los productos asociados a la categoría que se va a eliminar
+        // Hace una busqueda de todos los productos si tiene relacion con la categoria
         const productsToUpdate = await Product.find({ categoryId: id });
 
-            // Actualiza cada producto para asignarle la categoría predeterminada
+            // Si eliminamos la categoria por default guarda a los productos
             await Promise.all(productsToUpdate.map(async (product) => {
                 product.categoryId = defaultCategory._id;
                 await product.save();

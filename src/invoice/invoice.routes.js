@@ -6,6 +6,8 @@ import{getInvoicesByUser, getInvoices, updateInvoice} from './invoice.controller
 
 const api = express.Router();
 
+
+// Rutas de Factura Privadas 
 api.put('/updateInvoice/:invoiceId', [validateJwt, isAdmin], updateInvoice);
 api.get('/getInvoicesByUser/:userId', [validateJwt, isAdmin], getInvoicesByUser)
 api.get('/getInvoices/:userId', [validateJwt, isAdmin], getInvoices)
