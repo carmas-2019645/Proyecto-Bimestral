@@ -1,7 +1,7 @@
 {
     "client": "Thunder Client",
     "collectionName": "ProyectoBimestral",
-    "dateExported": "2024-03-08T16:32:02.979Z",
+    "dateExported": "2024-03-08T17:48:59.889Z",
     "version": "1.1",
     "folders": [
         {
@@ -227,8 +227,13 @@
             "method": "POST",
             "sortNum": 20000,
             "created": "2024-02-23T16:45:20.244Z",
-            "modified": "2024-03-05T23:49:59.824Z",
-            "headers": [],
+            "modified": "2024-03-08T17:46:59.225Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWRjMDI4M2E5N2Y3MmZhMDE3NzliZmIiLCJ1c2VybmFtZSI6ImNhcm1hcyIsIm5hbWUiOiJDYXJsb3MiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MDk5MjAwMTEsImV4cCI6MTcwOTkzMDgxMX0.PIEYF3cx10daFhA2nkrhirqSrwgVwwm2T9F26vJg4es"
+                }
+            ],
             "params": [],
             "body": {
                 "type": "formencoded",
@@ -236,11 +241,11 @@
                 "form": [
                     {
                         "name": "name",
-                        "value": "Cocina"
+                        "value": "Videojuegos"
                     },
                     {
                         "name": "description",
-                        "value": "Ventas de cocinas"
+                        "value": "Venta de juegos"
                     }
                 ]
             },
@@ -294,12 +299,17 @@
             "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
             "containerId": "c4f05da0-ca5a-4674-9280-a3cc28136cb1",
             "name": "deleteCategory",
-            "url": "deleteCategory/65dbfc2095132efd9163c210",
+            "url": "deleteCategory/65eb4f131795582e2ad2c713",
             "method": "DELETE",
             "sortNum": 60000,
             "created": "2024-02-22T21:55:00.996Z",
-            "modified": "2024-03-08T00:41:39.946Z",
-            "headers": [],
+            "modified": "2024-03-08T17:48:15.493Z",
+            "headers": [
+                {
+                    "name": "Authorization",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NWRjMDI4M2E5N2Y3MmZhMDE3NzliZmIiLCJ1c2VybmFtZSI6ImNhcm1hcyIsIm5hbWUiOiJDYXJsb3MiLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3MDk5MjAwMTEsImV4cCI6MTcwOTkzMDgxMX0.PIEYF3cx10daFhA2nkrhirqSrwgVwwm2T9F26vJg4es"
+                }
+            ],
             "params": [],
             "reqType": "del",
             "tests": []
@@ -793,11 +803,11 @@
             "colId": "c2e3f7a7-5647-405b-9fb4-0c7496c41aad",
             "containerId": "0f3034ed-5bd4-4e18-8803-bba774fda2ea",
             "name": "obtener facturas por usuario 2",
-            "url": "getInvoices/65ea9fe5c033c136b0df48cf",
+            "url": "getInvoices/65eb3d479406e11908b3cc2b",
             "method": "GET",
             "sortNum": 380000,
             "created": "2024-03-06T05:10:51.666Z",
-            "modified": "2024-03-08T15:25:45.159Z",
+            "modified": "2024-03-08T16:32:33.045Z",
             "headers": [
                 {
                     "name": "Authorization",
