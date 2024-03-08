@@ -28,11 +28,11 @@ export const registerAdmin = async (req, res) => {
         //rol por defecto
         data.role = 'ADMIN';
         //creamos nuestro usuario
-        let user = new User(data);
+        let user = new User(data)
         //guardamos en mongo
         await user.save();
         //respondemos al usuario
-        return res.send({ message: `Registered successfully. \nCan be logged with username ${user.username}` });
+        return res.send({ message: `Registered successfully. \nCan be logged with username ${user.username}` })
     } catch (err) {
         console.error(err);
         return res.status(500).send({ message: `Error registering user. | `, err: err.errors })
@@ -45,7 +45,7 @@ export const registerClient = async (req, res) => {
         data.password = await encrypt(data.password);
         //rol por defecto
         data.role = 'CLIENT';
-        let user = new User(data);
+        let user = new User(data)
         //guardamos en mongo
         await user.save();
         //respondemos al usuario
@@ -60,7 +60,7 @@ export const registerClient = async (req, res) => {
 export const login = async (req, res) => {
     try {
         // Capturar los datos
-        let { username, email, password } = req.body;
+        let { username, email, password } = req.body
 
         // Buscar el usuario por nombre de usuario o correo electrónico
         let user = await User.findOne({ $or: [{ username }, { email }] });
@@ -83,10 +83,10 @@ export const login = async (req, res) => {
                 token
             });
         }
-        return res.status(404).send({ message: 'Invalid credentials' });
+        return res.status(404).send({ message: 'Invalid credentials' })
     } catch (err) {
         console.error(err);
-        return res.status(500).send({ message: 'Error to login' });
+        return res.status(500).send({ message: 'Error to login' })
     }
 };
 
@@ -159,9 +159,9 @@ export const getPurchaseHistory = async (req, res) => {
         res.status(200).json({ purchaseHistory });
     } catch (error) {
         console.error('Error getting purchase history:', error);
-        res.status(500).json({ message: 'Internal Server Error' });
+        res.status(500).json({ message: 'Internal Server Error' })
     }
-};
+}
 
 
 export const getProfile = async (req, res) => {
@@ -176,7 +176,7 @@ export const getProfile = async (req, res) => {
         console.error(error);
         res.status(500).json({ message: 'Error getting user profile.' });
     }
-};
+}
 
 
 export const changePassword = async (req, res) => {
@@ -192,12 +192,12 @@ export const changePassword = async (req, res) => {
 
         // Si se pone un nuevo name que se actualice
         if (newName) {
-            user.name = newName;
+            user.name = newName
         }
 
         // Si se pone un nuevo Username que se actualice
         if (username) {
-            user.username = username;
+            user.username = username
         }
 
         // Si se proporciona una nueva contraseña, validar la contraseña anterior y actualizarla
@@ -213,7 +213,7 @@ export const changePassword = async (req, res) => {
             // Obtiene la nueva contraseña
             const hashedNewPassword = await bcrypt.hash(newPassword, 10);
             // La actualiza
-            user.password = hashedNewPassword;
+            user.password = hashedNewPassword
         }
         // Guarda
         await user.save();
@@ -221,55 +221,55 @@ export const changePassword = async (req, res) => {
         // Verifica si se actualizo
         const passwordUpdated = newPassword ? true : false;
 
-        return res.send({ message: 'The previous password is incorrect.', passwordUpdated });
+        return res.send({ message: 'The previous password is incorrect.', passwordUpdated })
     } catch (err) {
         console.error(err);
-        return res.status(500).send({ message: 'Error updating profile.' });
+        return res.status(500).send({ message: 'Error updating profile.' })
     }
-};
+}
 
 
 export const updateProfileById = async (req, res) => {
     try {
         // Obtener el ID
         const { id } = req.params;
-        const { email, name, surname } = req.body;
+        const { email, name, surname } = req.body
 
         // Verifica que al menos un camopo para actualizar
         if (!email && !name && !surname) {
-            return res.status(400).json({ message: 'At least one field is required to update.' });
+            return res.status(400).json({ message: 'At least one field is required to update.' })
         }
         // Buscar el usuario por su ID
-        let user = await User.findById(id);
+        let user = await User.findById(id)
 
         // Verificar si el usuario existe
         if (!user) {
             return res.status(404).json({ message: 'User not found.' });
         }
         if (email) {
-            user.email = email;
+            user.email = email
         }
         if (name) {
-            user.name = name;
+            user.name = name
         }
         if (surname) {
-            user.surname = surname;
+            user.surname = surname
         }
         // Guarda los cambios
         user = await user.save();
-        return res.status(200).json({ message: 'Profile successfully updated.', user });
+        return res.status(200).json({ message: 'Profile successfully updated.', user })
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Error updating profile.' });
+        return res.status(500).json({ message: 'Error updating profile.' })
     }
-};
+}
 
 
 export const deleteClient = async (req, res) => {
     try {
         // Obtiene el ID
-        const { id: authUserId } = req.user; 
-        const { id: userIdToDelete } = req.params;
+        const { id: authUserId } = req.user
+        const { id: userIdToDelete } = req.params
 
         // Verificar si el usuario autenticado es el mismo
         if (authUserId !== userIdToDelete) {
@@ -281,16 +281,16 @@ export const deleteClient = async (req, res) => {
 
         // Verificar si el usuario existe
         if (!user) {
-            return res.status(404).json({ message: 'User not found.' });
+            return res.status(404).json({ message: 'User not found.' })
         }
 
         // Eliminar el usuario de la base de datos
         await User.findByIdAndDelete(userIdToDelete);
 
         // Responder con un mensaje de éxito
-        return res.status(200).json({ message: 'Account successfully deleted.' });
+        return res.status(200).json({ message: 'Account successfully deleted.' })
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Error deleting account.' });
+        return res.status(500).json({ message: 'Error deleting account.' })
     }
-};
+}
