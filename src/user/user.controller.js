@@ -1,5 +1,5 @@
 'use strict' //Modo estricto
-
+import jwt from 'jsonwebtoken';
 import User from './user.model.js'
 import Product from '../product/product.model.js'
 import {encrypt, checkPassword, checkUpdate } from '../utils/validator.js'
@@ -147,12 +147,15 @@ export const loginClient = async (req, res) => {
 
 export const getPurchaseHistory = async (req, res) => {
     try {
-        const { userId } = req.params;
-
-        // Busca todas las facturas asociadas
-        const purchaseHistory = await Invoice.find({ userId }).populate('items.productId');
-
-        // Envia la lista de facturas
+        // Obtener el token
+        let secretKey = process.env.SECRET_KEY;
+        // Obteniene el token del headers
+        let { authorization } = req.headers;
+        // Verifica
+        let { uid } = jwt.verify(authorization, secretKey);
+        // Buscar todas las facturas del userId
+        const purchaseHistory = await Invoice.find({ userId: uid }).populate('items.productId');
+        // Envia la factura
         res.status(200).json({ purchaseHistory });
     } catch (error) {
         console.error('Error getting purchase history:', error);

@@ -7,7 +7,7 @@ const api = express.Router();
 
 // Rutas de Carrito de Compras privadas
 api.post('/addToCart',[validateJwt, isClient], addToCart)
-api.delete('/removeSelectedProduct/:cartId/:userId/:productId',[validateJwt, isClient], removeSelectedProduct)
-api.post('/completePurchase/:userId',[validateJwt, isClient], completePurchase)
+api.delete('/removeSelectedProduct',[validateJwt, isClient], removeSelectedProduct)
+api.post('/completePurchase',[validateJwt, isClient], completePurchase)
 
 export default api
