@@ -17,7 +17,7 @@ api.delete('/deleteU/:id', [validateJwt, isAdmin], deleteU)
 
 // RUTAS CLIENT PRIVADAS
 api.get('/testClient', [validateJwt, isClient], testClient)
-api.post('/loginClient', [validateJwt, isClient], loginClient);
+api.post('/loginClient', loginClient);
 api.get('/getPurchaseHistory', [validateJwt, isClient], getPurchaseHistory);
 api.get('/getProfile', [validateJwt, isClient], getProfile)
 api.put('/password', [validateJwt, isClient], changePassword)
