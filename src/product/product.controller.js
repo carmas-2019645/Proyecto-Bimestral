@@ -4,24 +4,35 @@ import Category from '../category/category.model.js';
 
 export const createProduct = async (req, res) => {
     try {
-        const { name, description, price ,quantity, categoryId } = req.body;
-        // Creamos una instancia de producto
+        const { name, description, price, quantity, categoryId } = req.body;
+        
+        // Verificar si la categoría existe
+        const existingCategory = await Category.findById(categoryId);
+        if (!existingCategory) {
+            return res.status(404).json({ message: 'Category not found.' });
+        }
+
+        // CreaW
         const product = new Product({
             name,
             description,
             price,
             quantity,
-            categoryId // Asignar el valor
-        })
+            categoryId
+        });
+
         // Guardar el producto
         const newProduct = await product.save();
+
         // Responder con el nuevo producto
-        res.status(201).send({ message: 'Product created successfully', product: newProduct });
+        res.status(201).json({ message: 'Product created successfully', product: newProduct });
     } catch (error) {
-        // Manejos de errores
-        res.status(400).send({ message: 'Error creating product', error: error.message });
+        // Manejo de errores
+        console.error(error);
+        res.status(400).json({ message: 'Error creating product', error: error.message });
     }
-}
+};
+
 
 export const getAllProducts = async (req, res) => {
     try {
@@ -147,17 +158,18 @@ export const searchProductsByName = async (req, res) => {
 
 // Función para obtener todas las categorías de productos
 
-export const getAllCategorie = async (req, res) => {
+export const getProductsCategory = async (req, res) => {
     try {
-        const categories = await Category.find()
+        const categoryName = req.body.categoryName;
+        const products = await Product.find({ categoryName: categoryName });
 
-        if (!categories || categories.length === 0) {
-            return res.status(404).json({ message: 'No categories found' })
+        if (!products || products.length === 0) {
+            return res.status(404).json({ message: 'No products found for this category' });
         }
 
-        return res.send(categories);
+        return res.json(products);
     } catch (error) {
-        return res.status(500).json({ message: 'Error retrieving categories', error: error.message })
+        return res.status(500).json({ message: 'Error retrieving products', error: error.message });
     }
 }
 

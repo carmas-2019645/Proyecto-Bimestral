@@ -1,24 +1,24 @@
 import express from 'express'
 import { validateJwt, isAdmin, isClient} from '../middlewares/validate-jwt.js';
 import {createProduct,getAllProducts, getProductById, updateProduct, Inventory, 
-        getOutOfStockProducts, deleteProduct, getBestSellers, searchProductsByName, getAllCategorie, getProductsByCategory  } from './product.controller.js'
+        getOutOfStockProducts, deleteProduct, getBestSellers, searchProductsByName, getProductsCategory, getProductsByCategory  } from './product.controller.js'
 
 const api = express.Router();
 
 // Rutas para categorías
-api.post('/createProduct', createProduct);
-api.get('/getAllProducts', getAllProducts)
-api.get('/getProductById/:id', getProductById)
-api.put('/updateProduct/:id', updateProduct)
-api.get('/inventory',Inventory)
-api.get('/getOutOfStockProducts', getOutOfStockProducts)
-api.delete('/deleteProduct/:id', deleteProduct)
+api.post('/createProduct',[validateJwt, isAdmin], createProduct);
+api.get('/getAllProducts',[validateJwt, isAdmin], getAllProducts)
+api.get('/getProductById/:id',[validateJwt, isAdmin], getProductById)
+api.put('/updateProduct/:id',[validateJwt, isAdmin], updateProduct)
+api.get('/inventory',[validateJwt, isAdmin],Inventory)
+api.get('/getOutOfStockProducts',[validateJwt, isAdmin], getOutOfStockProducts)
+api.delete('/deleteProduct/:id',[validateJwt, isAdmin], deleteProduct)
 
 
 // Rutas de Productos Privadas para Cliente
 api.get('/getBestSellers',[validateJwt, isClient], getBestSellers)
 api.get('/searchProductsName/:name',[validateJwt, isClient],searchProductsByName)
-api.get('/Categories', [validateJwt,isClient ], getAllCategorie)
+api.post('/categories/:categoryName',[validateJwt, isClient], getProductsCategory);
 api.get('/getProductsByCategory/:name', [validateJwt, isClient], getProductsByCategory);
 
 

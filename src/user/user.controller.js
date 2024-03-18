@@ -20,6 +20,33 @@ export const testClient = (req, res)=>{
     return res.send({message: 'Test is running'})
 }
 
+export const createDefaultAdmin = async () => {
+    try {
+        // Verificar si ya existe algún usuario administrador en la base de datos
+        const existingAdmin = await User.findOne({ role: 'ADMIN' });
+        
+        // Si no hay usuarios administradores, crear uno por defecto
+        if (!existingAdmin) {
+            await User.create({
+                _id: '65dc0283a97f72fa01779bfb',
+                name: 'Carlos',
+                surname: 'Armas',
+                username: 'carmas',
+                password: '$2b$10$G1ro2YSs5AJ1FC8ca4lnduRl4HWJtXd1WHZT.qH8Y0uX6AugKFagm', // Contraseña cifrada
+                email: 'armassamuel018@gmail.com',
+                phone: '12345678',
+                role: 'ADMIN'
+            });
+            
+            console.log('Usuario administrador por defecto creado con éxito.');
+        } else {
+            console.log('Ya existe un usuario administrador en la base de datos.');
+        }
+    } catch (error) {
+        console.error('Error al crear el usuario administrador por defecto:', error);
+    }
+};
+
 export const registerAdmin = async (req, res) => {
     try {
         let data = req.body;
@@ -231,66 +258,58 @@ export const changePassword = async (req, res) => {
 
 export const updateProfileById = async (req, res) => {
     try {
-        // Obtener el ID
-        const { id } = req.params;
-        const { email, name, surname } = req.body
+        // Obtener el ID del usuario del token JWT
+        const userIdFromToken = req.user.id;
 
-        // Verifica que al menos un camopo para actualizar
+        // Obtener los datos de la solicitud
+        const { email, name, surname } = req.body;
+
+        // Verificar que al menos un campo se haya proporcionado para actualizar
         if (!email && !name && !surname) {
-            return res.status(400).json({ message: 'At least one field is required to update.' })
+            return res.status(400).json({ message: 'At least one field is required to update.' });
         }
-        // Buscar el usuario por su ID
-        let user = await User.findById(id)
+
+        // Buscar y actualizar el perfil del usuario en la base de datos
+        let updatedUser = await User.findByIdAndUpdate(userIdFromToken, req.body, { new: true });
 
         // Verificar si el usuario existe
-        if (!user) {
+        if (!updatedUser) {
             return res.status(404).json({ message: 'User not found.' });
         }
-        if (email) {
-            user.email = email
-        }
-        if (name) {
-            user.name = name
-        }
-        if (surname) {
-            user.surname = surname
-        }
-        // Guarda los cambios
-        user = await user.save();
-        return res.status(200).json({ message: 'Profile successfully updated.', user })
+
+        // Enviar una respuesta con los datos actualizados del usuario
+        return res.status(200).json({ message: 'Profile successfully updated.', user: updatedUser });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Error updating profile.' })
+        return res.status(500).json({ message: 'Error updating profile.' });
     }
-}
+};
+
 
 
 export const deleteClient = async (req, res) => {
     try {
-        // Obtiene el ID
-        const { id: authUserId } = req.user
-        const { id: userIdToDelete } = req.params
+        // Obtener el ID del usuario del token JWT
+        const userIdFromToken = req.user.id;
 
-        // Verificar si el usuario autenticado es el mismo
-        if (authUserId !== userIdToDelete) {
-            return res.status(403).json({ message: 'You do not have permission to delete this account.' });
-        }
+        // Obtener el ID del cliente a eliminar del token JWT
+        const userIdToDelete = userIdFromToken;
 
         // Buscar el usuario por su ID
         const user = await User.findById(userIdToDelete);
 
         // Verificar si el usuario existe
         if (!user) {
-            return res.status(404).json({ message: 'User not found.' })
+            return res.status(404).json({ message: 'User not found.' });
         }
 
         // Eliminar el usuario de la base de datos
         await User.findByIdAndDelete(userIdToDelete);
 
         // Responder con un mensaje de éxito
-        return res.status(200).json({ message: 'Account successfully deleted.' })
+        return res.status(200).json({ message: 'Account successfully deleted.' });
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'Error deleting account.' })
+        return res.status(500).json({ message: 'Error deleting account.' });
     }
-}
+};

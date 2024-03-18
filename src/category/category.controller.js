@@ -25,6 +25,25 @@ export const createCategory = async (req, res) => {
     }
 };
 
+export const createDefault = async (req, res) => {
+    try {
+        // Verificar si ya existe una categoría con el nombre "Default"
+        const existingCategory = await Category.findOne({ name: 'Default' });
+
+        if (existingCategory) {
+            return res.status(400).json({ message: 'Category with name "Default" already exists' });
+        }
+
+        // Crear la nueva categoría "Default"
+        const newCategory = await Category.create({ name: 'Default', description: 'Productos que no tienen categoría' });
+
+        return res.status(201).json({ message: 'Category created successfully', category: newCategory });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+
 
 export const getAllCategories = async (req, res) => {
     try {
